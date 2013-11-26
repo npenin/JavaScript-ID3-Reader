@@ -49,9 +49,9 @@
      */
     ID3.loadTags = function(url, cb, options) {
         options = options || {};
-        var dataReader = options["dataReader"] || BufferedBinaryAjax;
+        var dataReader = (options["file"]) ? BufferedBinaryFileReader : (options["dataReader"] || BufferedBinaryAjax);
         
-        dataReader(url, function(data) {
+        dataReader(options["file"] || url, function(data) {
             // preload the format identifier
             data.loadRange(_formatIDRange, function() {
                 var reader = getTagReader(data);
